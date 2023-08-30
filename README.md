@@ -1,8 +1,24 @@
-# React + Vite
+# Todo-List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto personal. Página donde podrás llevar un listado de tus tareas diarias.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔸HTML
+🔸Saas
+🔸JavaScript
+🔸React
+🔸Vite
+🔸ExpressJS
+🔸MySQL
+🔸Vite
+
+
+## Puntos Claves
+
+✅ Diseño mobile first
+✅ CRUD
+✅ RestAPI
+
+## Especificaciones
+
