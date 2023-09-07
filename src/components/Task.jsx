@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 // eslint-disable-next-line react/prop-types
-function Task ({task, onChecked, taskType}) {
+function Task ({task, onChecked}) {
   function handleClick (id){
     return onChecked(id)
   }
@@ -16,16 +16,14 @@ function Task ({task, onChecked, taskType}) {
   
 
   return (
-  <li  className="task">
-    <span>To-Do</span>
-    <p>⭐{taskType}</p>
+  <li className="task">
     <p className="task__date">{task.date}</p>
     <div className="task__data">
       <p className="task__name">{task.name}</p>
       <img className="task__checked" style={task__checked} src={task.checked === "false" ? './uncheck.svg' : './check-solid.svg'} onClick={handleClick(task.id)}></img>
     </div>
     
-</li>
+  </li>
 )
 }
 

@@ -3,16 +3,15 @@ const getAllTasks = async ()=> {
   const response = await fetch(`http://localhost:4500/api/allTasks/${userId}`);
   const todoList = await response.json();
   console.log('todo get alltask', todoList)
-  const date1 = new Date(todoList[0].task_date)
-
-  const result = [
-    {
-      id: todoList[0].task_id,
-      date: date1.toLocaleDateString(),
-      name: todoList[0].task_name,
-      checked: todoList[0].task_checked,
-    },
-  ];
+  
+  const result = todoList.map((el)=>{
+    const date = new Date(el.task_date)
+    return {
+      id: el.task_id,
+      date: el.task_date === null ? '' : date.toLocaleDateString(),
+      name: el.task_name,
+      checked: el.task_checked,
+    };})
   return result;
 }
 

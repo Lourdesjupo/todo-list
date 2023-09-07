@@ -12,3 +12,5 @@ const taskChecked = async (data)=>{
   }
 }
 export default taskChecked;
+
+//data = {task_name:, task_date:, task_checked:}

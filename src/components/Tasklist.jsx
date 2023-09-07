@@ -7,7 +7,12 @@ function Tasklist ({tasklist, onTaskChecked, taskType}) {
     onTaskChecked(id)
   }
   return (
-<ul>
+<ul >
+  <div className='tasklist'>
+    <p className='tasklist--span'>To-Do</p>
+    <p className='tasklist--type'><span className='tasklist--star'>⭐</span>{taskType}</p>
+      
+  </div>
 {tasklist.map((task)=>{
   return (<Task
   task ={task}
