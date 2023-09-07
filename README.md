@@ -5,7 +5,7 @@ Proyecto personal. Página donde podrás llevar un listado de tus tareas diarias
 ## Tecnologías
 
 🔸HTML
-🔸Saas
+🔸Sass
 🔸JavaScript
 🔸React
 🔸Vite
