@@ -28,20 +28,43 @@ function Main() {
 
   const handleTaskChecked = (id) => {
     //hay que modificar el checked del servidor si está a true a false y viceversa
-    console.log(id);
+    checkedItem(id)
+    getAllTasks().then((data)=>{
+    setTasks(data)
+     })
+    
   };
   const handleDragStart = ()=>{
+  
+  }
+
+  const handleClickDeleted =  (id) =>{
+     deleteItem(id)
+     getAllTasks().then((data)=>{
+      setTasks(data)
+     })
     
   }
 
+  const handleClickEdit= async (id)=>{
+    editItem(id)
+    const data = await getAllTasks()
+    setTasks(data)
+  }
+
+
+//DATES
   const time = Date.now();
   const date = new Date(time);
   const today = date.toLocaleDateString();
   console.log('TODAY', today);
+
+
+
   return (
     <>
       <header className='header'>
-        <p className='header__title'>Hello manolito gaffotas </p>
+        <p className='header__title'>Hola Lourdes!</p>
       </header>
       <main>
         <section className='button'>
@@ -74,6 +97,8 @@ function Main() {
               onTaskChecked={handleTaskChecked}
               taskType={'No-date'}
               dragstart={handleDragStart}
+              onDeleted={handleClickDeleted}
+              onEdit={handleClickEdit}
             />
           </section>
           <section className='todo-today'>
@@ -81,6 +106,8 @@ function Main() {
               tasklist={tasks.filter((task) => task.date === today)}
               onTaskChecked={handleTaskChecked}
               taskType={'Todo-Today'}
+              onDeleted={handleClickDeleted}
+              onEdit={handleClickEdit}
             />
           </section>
           <section className='todo-future'>
@@ -90,6 +117,8 @@ function Main() {
               )}
               onTaskChecked={handleTaskChecked}
               taskType={'Todo-Future'}
+              onDeleted={handleClickDeleted}
+              onEdit={handleClickEdit}
             />
           </section>
         </div>

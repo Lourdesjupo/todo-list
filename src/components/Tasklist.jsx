@@ -2,9 +2,15 @@ import Task from './Task'
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
-function Tasklist ({tasklist, onTaskChecked, taskType}) {
+function Tasklist ({tasklist, onTaskChecked, taskType, onDeleted,onEdit}) {
   function handleChecked (id) {
     onTaskChecked(id)
+  }
+  function handleClickDeleted (id) {
+    onDeleted(id)
+  }
+  function handleClickEdit (id) {
+    onEdit(id)
   }
   return (
 <ul >
@@ -18,6 +24,8 @@ function Tasklist ({tasklist, onTaskChecked, taskType}) {
   task ={task}
   key={task.id}
   onChecked={handleChecked}
+  onDeleted={handleClickDeleted}
+  onEdit={handleClickEdit}
   taskType={taskType}
   />)
 })}

@@ -1,14 +1,23 @@
+@import './variables.scss';
+
 .header{
   height: 160px;  
   background-image: url('../wave-haikei.svg');
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  top: 0px;
   
+ 
   &__title {
-    color: rgba(0, 0, 0, 0.535);
+    color: $font-color-primary;
     font-size: 2.8rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     padding-top: 110px;
+    padding-left: 15px;
   }
 }
 
