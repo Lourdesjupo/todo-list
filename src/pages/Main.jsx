@@ -3,6 +3,9 @@ import Tasklist from '../components/Tasklist';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getAllTasks from '../services/Api_allTasks';
+import taskChecked from '../services/Api_taskchecked';
+import deleteItem from '../services/Api_deteItem';
+import editItem from '../services/Api_editItem';
 
 function Main() {
   const [tasks, setTasks] = useState([]);
@@ -28,28 +31,20 @@ function Main() {
 
   const handleTaskChecked = (id) => {
     //hay que modificar el checked del servidor si está a true a false y viceversa
-    checkedItem(id)
-    getAllTasks().then((data)=>{
-    setTasks(data)
-     })
-    
+    // taskChecked(id)
+    // getAllTasks().then((data)=>{
+    // setTasks(data)
+    //  })
+    console.log('holi')
   };
   const handleDragStart = ()=>{
   
   }
 
-  const handleClickDeleted =  (id) =>{
-     deleteItem(id)
-     getAllTasks().then((data)=>{
-      setTasks(data)
-     })
-    
-  }
+  const handleClickDeleted =  (task) =>{
+    deleteItem(task)
 
-  const handleClickEdit= async (id)=>{
-    editItem(id)
-    const data = await getAllTasks()
-    setTasks(data)
+    
   }
 
 
@@ -57,7 +52,7 @@ function Main() {
   const time = Date.now();
   const date = new Date(time);
   const today = date.toLocaleDateString();
-  console.log('TODAY', today);
+  // console.log('TODAY', today);
 
 
 
@@ -94,20 +89,20 @@ function Main() {
           <section className='no-date'>
             <Tasklist
               tasklist={tasks.filter((task) => task.date === '')}
-              onTaskChecked={handleTaskChecked}
+             onTaskChecked={handleTaskChecked}
               taskType={'No-date'}
               dragstart={handleDragStart}
-              onDeleted={handleClickDeleted}
-              onEdit={handleClickEdit}
+              onDelete={handleClickDeleted}
+
             />
           </section>
           <section className='todo-today'>
             <Tasklist
               tasklist={tasks.filter((task) => task.date === today)}
-              onTaskChecked={handleTaskChecked}
+             onTaskChecked={handleTaskChecked}
               taskType={'Todo-Today'}
-              onDeleted={handleClickDeleted}
-              onEdit={handleClickEdit}
+              onDelete={handleClickDeleted}
+
             />
           </section>
           <section className='todo-future'>
@@ -117,8 +112,8 @@ function Main() {
               )}
               onTaskChecked={handleTaskChecked}
               taskType={'Todo-Future'}
-              onDeleted={handleClickDeleted}
-              onEdit={handleClickEdit}
+              onDelete={handleClickDeleted}
+
             />
           </section>
         </div>

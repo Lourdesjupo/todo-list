@@ -13,6 +13,7 @@ const getAllTasks = async ()=> {
       checked: el.task_checked,
     };})
   return result;
+
 }
 
 export default getAllTasks
