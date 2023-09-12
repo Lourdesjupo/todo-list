@@ -1,0 +1,44 @@
+
+.title_addTask {
+font-size: 1.9rem;
+text-align: center;
+
+}
+.form_addTask {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fiedset{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border: none;
+    align-content: center;
+    align-items: flex-start;
+    gap:15px;
+    margin-top: 30px;
+    &_label {
+        font-size: 1.6rem;
+        padding-right: 12px;
+        display: flex;
+        gap:12px;
+    }
+    &_date {
+        font-size: 1.6rem;
+    }
+    &_name {
+        font-size: 1.6rem;   
+
+    }
+}
+
+.button {
+text-align: center;
+padding: 15px;
+font-size: 1.9rem;
+width: 300px;
+background-color: $terciary-color ;
+}

@@ -4,53 +4,66 @@ import { Link } from 'react-router-dom';
 
 function AddTask() {
   const [newTask, setNewTask] = useState({
-    nameTask: '',
+    name: '',
     date: '',
-    checked: 'false',
+    checked: false,
   });
   console.log('esta es la tarea guardada en addTask', newTask);
 
-  const handleForm = (ev) => {
-    console.log(ev);
-    setNewTask({ ...newTask, [ev.target.name]: ev.target.value });
+  const handleFormDate = (ev) => {
+    const nDate = new Date(ev.target.value);
+    setNewTask({ ...newTask, date: nDate });
   };
+  const handleFormName = (ev) => {
+    setNewTask({ ...newTask, name: ev.target.value });
+  };
+
   const handleNewTaskClick = () => {
     console.log('handleNewTaskClick', newTask);
-    return taskChecked({ ...newTask, date: newTask.date === '' ?  null : newTask.date });
+    return taskChecked({
+      ...newTask,
+      date: newTask.date === '' ? null : newTask.date,
+    });
   };
   return (
     <>
       <header>
-        <h1>Añade tu tarea</h1>
+        <h1 className='title_addTask'>Añade tu tarea</h1>
       </header>
       <main>
         <section>
-          <form>
-            <fieldset>
-              <label htmlFor='date'>
+          <form className='form_addTask'>
+            <fieldset className='fiedset'>
+              <label className='fiedset_label' htmlFor='date'>
                 {' '}
                 Date
                 <input
+                  className='fiedset_date'
                   type='date'
                   name='date'
                   id='date'
-                  onChange={handleForm}
+                  onChange={handleFormDate}
                 />
               </label>
-              <label htmlFor='nameTask'>
+              <label className='fiedset_label' htmlFor='nameTask'>
                 {' '}
                 Task
                 <textarea
+                  className='fiedset_name'
                   name='nameTask'
                   id='task'
                   cols='30'
                   rows='10'
                   placeholder='write here what do you have to do'
-                  onChange={handleForm}
+                  onChange={handleFormName}
                 ></textarea>
               </label>
             </fieldset>
-            <Link to='/' onClick={handleNewTaskClick}>
+            <Link
+              className='button btn_addTask'
+              to='/'
+              onClick={handleNewTaskClick}
+            >
               Add task
             </Link>
           </form>

@@ -3,9 +3,9 @@ import Tasklist from '../components/Tasklist';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getAllTasks from '../services/Api_allTasks';
-import taskChecked from '../services/Api_taskchecked';
+
 import deleteItem from '../services/Api_deteItem';
-import editItem from '../services/Api_editItem';
+
 
 function Main() {
   const [tasks, setTasks] = useState([]);

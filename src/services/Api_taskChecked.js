@@ -1,7 +1,7 @@
 const taskChecked = async (data)=>{
   try { 
     await fetch('http:localhost:4500/api/taskchecked',{
-      method: 'POST',
+      method: 'PUT',
       headers: {'content type': 'application/json'},
       body: JSON.stringify(data)
     }
