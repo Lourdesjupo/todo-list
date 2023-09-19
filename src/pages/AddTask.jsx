@@ -1,30 +1,47 @@
 import { useState } from 'react';
-import taskChecked from '../services/Api_addNewTask';
-import { Link } from 'react-router-dom';
+import addNewTask from '../services/Api_addNewTask';
+import { Link, useNavigate } from 'react-router-dom';
 
+// eslint-disable-next-line react/prop-types
 function AddTask() {
   const [newTask, setNewTask] = useState({
+    fk_user: 1,
     name: '',
     date: '',
     checked: false,
   });
-  console.log('esta es la tarea guardada en addTask', newTask);
+  // console.log('esta es la tarea guardada en addTask', newTask);
+ const navigate = useNavigate();
+
+  const [errorMsg, setErrorMsg] = useState();
 
   const handleFormDate = (ev) => {
+    //cambiar a UTC
     const nDate = new Date(ev.target.value);
     setNewTask({ ...newTask, date: nDate });
   };
   const handleFormName = (ev) => {
-    setNewTask({ ...newTask, name: ev.target.value });
+    setNewTask({ ...newTask, name: ev.target.value.trim() });
   };
 
-  const handleNewTaskClick = () => {
-    console.log('handleNewTaskClick', newTask);
-    return taskChecked({
-      ...newTask,
-      date: newTask.date === '' ? null : newTask.date,
-    });
+  const handleNewTaskClick = async (ev) => {
+    ev.preventDefault()
+    try {
+      if(newTask.name ===''){
+        throw new Error('Rellena el nombre de la tarea')
+      }
+      await addNewTask({
+        ...newTask,
+        date: newTask.date === '' ? null : newTask.date,
+      });
+      console.log('tarea creada')
+       navigate('/')
+    } catch (error) {
+      setErrorMsg(`Error al crear la tarea: ${error.message}` );
+      console.log('ERROR', error)
+    }
   };
+
   return (
     <>
       <header>
@@ -59,14 +76,18 @@ function AddTask() {
                 ></textarea>
               </label>
             </fieldset>
-            <Link
-              className='button btn_addTask'
-              to='/'
-              onClick={handleNewTaskClick}
-            >
+
+            <button className='button btn_addTask' onClick={handleNewTaskClick}>
               Add task
+            </button>
+            <Link className='button btn_addTask' to={'/'}>
+              cancelar
             </Link>
           </form>
+          {errorMsg && (
+            <div className='error_addTask'>{errorMsg}</div>
+          )}
+         
         </section>
       </main>
     </>

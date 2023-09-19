@@ -36,22 +36,24 @@ function EditTask() {
   return (
     <>
       <header>
-        <h2>Modifica tu tarea</h2>
+        <h2 className='title_editTask '>Modifica tu tarea</h2>
       </header>
       <main>
         <form>
-          <fieldset>
-            <label htmlFor='date'>
+          <fieldset className='fieldset'>
+            <label htmlFor='date' className='fieldset_label'>
               <input
                 type='date'
                 name='date'
                 id='date'
                 value={editTask.date}
                 onChange={handleDate}
+                className='fieldset_date'
               />
             </label>
-            <label htmlFor='name_task'>
+            <label htmlFor='name_task' className='fieldset_label'>
               <textarea
+              className='fieldset_date'
                 name='name_task'
                 id=''
                 cols='30'
@@ -62,7 +64,7 @@ function EditTask() {
             </label>
           </fieldset>
           <Link to={'/'}>
-            <button onClick={handleClick}>Modificar</button>
+            <button className='button'onClick={handleClick}>Modificar</button>
           </Link>
         </form>
       </main>

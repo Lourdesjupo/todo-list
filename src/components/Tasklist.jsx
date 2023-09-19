@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
 function Tasklist ({tasklist, onTaskChecked, taskType, onDelete, onEdit}) {
-  function handleChecked (id) {
-    onTaskChecked(id)
+  function handleChecked (id, check) {
+    onTaskChecked(id, check)
   }
   function handleClickDeleted (task) {
     onDelete(task)

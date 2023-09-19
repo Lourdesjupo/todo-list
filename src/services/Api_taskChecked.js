@@ -1,11 +1,11 @@
 const taskChecked = async (data)=>{
+  console.log('recibo al fetch', data)
   try { 
-    await fetch('http:localhost:4500/api/taskchecked',{
+    await fetch('http://localhost:4500/api/taskchecked', {
       method: 'PUT',
-      headers: {'content type': 'application/json'},
+      headers: {'content-type':'application/json'},
       body: JSON.stringify(data)
-    }
-    )
+    })
   }
   catch (error){
     console.error('error actualizando check ')

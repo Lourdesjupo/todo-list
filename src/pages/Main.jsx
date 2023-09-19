@@ -1,9 +1,9 @@
 import '../styles/main.scss';
 import Tasklist from '../components/Tasklist';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getAllTasks from '../services/Api_allTasks';
-
+import taskChecked from '../services/Api_taskChecked';
 import deleteItem from '../services/Api_deteItem';
 
 
@@ -23,30 +23,34 @@ function Main() {
 
   // ]
 
+
   useEffect(() => {
     getAllTasks().then((data) => {
       setTasks(data);
-    });
-  }, []);
 
-  const handleTaskChecked = (id) => {
-    //hay que modificar el checked del servidor si está a true a false y viceversa
-    // taskChecked(id)
-    // getAllTasks().then((data)=>{
-    // setTasks(data)
-    //  })
-    console.log('holi')
+    });
+  },[]);
+  
+
+// data
+
+  const handleTaskChecked = async (id,check) => {
+    console.log(check,'check')
+    await taskChecked({id, check})
+    getAllTasks().then((data) => {
+    setTasks(data)})
+
   };
   const handleDragStart = ()=>{
   
   }
 
-  const handleClickDeleted =  (task) =>{
-    deleteItem(task)
+  const handleClickDeleted = async (task) =>{
 
-    
+   await deleteItem(task)
+    getAllTasks().then((data) => {
+    setTasks(data)})
   }
-
 
 //DATES
   const time = Date.now();

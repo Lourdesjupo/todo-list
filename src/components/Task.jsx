@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 
+
 // eslint-disable-next-line react/prop-types
-function Task ({task, onChecked }) {
-  function handleClick (id){
-    return onChecked(id)
+function Task ({task, onChecked, onDelete }) {
+  function handleClick (id, check){
+    check = check === 0 ? 1:0
+    console.log(check)
+    return onChecked(id, check)
   }
   // function handleClickDelete (task){
   //   return onDelete(task)
   // }
+  const handleDeleteId = (id)=> {
+    return onDelete(id)
+  }
+
 
   const task__checked = {
 
@@ -25,11 +32,11 @@ function Task ({task, onChecked }) {
       <Link to={`/editTask/${id}`}>
        <img className="task__edit" src="./pen-solid.svg" alt="editar"/>
       </Link>
-      <img className="task__delete"src="./xmark-solid.svg" alt="borrar"/>
+      <img className="task__delete"src="./xmark-solid.svg" onClick={()=>{handleDeleteId(task.id)}}alt="borrar"/>
     </div>
     <div className="task__data">
       <p className="task__name">{task.name}</p>
-      <img className="task__checked" style={task__checked} src={task.checked === "false" ? './uncheck.svg' : './check-solid.svg'} onClick={handleClick(task.id)}></img>
+      <img className="task__checked" style={task__checked} src={task.checked === 0 ? './uncheck.svg' : './check-solid.svg'} onClick={()=>{handleClick(task.id, task.checked)}}></img>
     </div>
     
   </li>
