@@ -6,10 +6,13 @@ async function editItem(item) {
     console.log(item,'envio al servidor')
     try {
         await fetch(`http://localhost:4500/api/editItem`, {
-            method: 'PUT',
-            headers: { 'content-type':'application/json'},
-            body: JSON.stringify(item)
-        })
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+            "Authorization": localStorage.getItem('jwt'),
+          },
+          body: JSON.stringify(item),
+        });
 
     } catch (error) {
         console.error('error al editar tarea', error)

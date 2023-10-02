@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import getTask from '../services/Api_getTask';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import editItem from '../services/Api_editItem';
 
 // eslint-disable-next-line react/prop-types
@@ -10,6 +10,7 @@ function EditTask() {
     date: '',
     name: '',
   });
+  const navigate = useNavigate()
   console.log(editTask)
   useEffect(() => {
     // eslint-disable-next-line react/prop-types
@@ -19,9 +20,17 @@ function EditTask() {
     });
   }, []);
 
-  function handleClick() {
+  async function handleClick(ev) {
+  ev.preventDefault()
     console.log(editTask)
-    editItem(editTask);
+    try {
+      await editItem(editTask)
+      console.log('tarea creada');
+      navigate('/')
+
+    }catch(error){
+      console.error(error)
+    }
   }
 
   const handleDate = (ev) => {
@@ -62,10 +71,12 @@ function EditTask() {
                 onChange={handleNameTask}
               ></textarea>
             </label>
-          </fieldset>
+           <button className='button'onClick={handleClick}>Modificar</button>
           <Link to={'/'}>
-            <button className='button'onClick={handleClick}>Modificar</button>
+            <button className='button'onClick={handleClick}>Cancelar</button>
           </Link>
+          </fieldset>
+          
         </form>
       </main>
     </>

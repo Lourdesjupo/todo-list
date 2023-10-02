@@ -1,0 +1,65 @@
+@import './variables.scss';
+
+.link, .options {
+  font-size: 1.8rem;
+display:flex;
+justify-content: space-between;
+
+}
+.link_login {
+  padding:15px;
+  background-color: red;
+ 
+}
+.link_register {
+padding: 15px;
+  background-color: red;
+}
+
+.landing_form {
+display:flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+min-width: 100vw;
+min-height: 100vh;
+}
+.login_option {
+ 
+}
+.register_option {
+display:block;
+}
+
+
+.login > ::placeholder {
+  font-size: 1.8rem;
+
+}
+.login > input, .login_button{
+width: 250px;
+height: 30px;
+    font-size: 1.8rem;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+}
+.register> ::placeholder {
+  font-size: 1.8rem;
+
+}
+
+.register>input,
+.register_button {
+  width: 250px;
+  height: 30px;
+    font-size: 1.8rem;
+}
+
+.register {
+  display: none;
+  display: flex;
+  flex-direction: column;
+}

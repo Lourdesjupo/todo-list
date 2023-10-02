@@ -52,6 +52,13 @@ function Main() {
     setTasks(data)})
   }
 
+  function name () {
+    const userName = localStorage.getItem('name').slice(0,-1).slice(1)
+    return  userName.charAt(0).toUpperCase()+ userName.slice(1)
+
+   
+  }
+
 //DATES
   const time = Date.now();
   const date = new Date(time);
@@ -63,7 +70,7 @@ function Main() {
   return (
     <>
       <header className='header'>
-        <p className='header__title'>Hola Lourdes!</p>
+        <p className='header__title'>Hola {name()}!</p>
       </header>
       <main>
         <section className='button'>
@@ -97,7 +104,6 @@ function Main() {
               taskType={'No-date'}
               dragstart={handleDragStart}
               onDelete={handleClickDeleted}
-
             />
           </section>
           <section className='todo-today'>

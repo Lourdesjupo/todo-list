@@ -3,7 +3,7 @@ const addNewTask =async (data) =>{
   try{
     await fetch('http://localhost:4500/api/addNewTask', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/json',"Authorization": localStorage.getItem("jwt")},
       body: JSON.stringify(data),
     });
 

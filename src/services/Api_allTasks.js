@@ -1,6 +1,10 @@
+
 const getAllTasks = async ()=> {
-  const userId = '1'
-  const response = await fetch(`http://localhost:4500/api/allTasks/${userId}`);
+  // const userId = '1'
+  const response = await fetch(`http://localhost:4500/api/allTasks`, {
+    method:'GET',  
+    headers: {"Authorization": localStorage.getItem("jwt")}
+  });
   const todoList = await response.json();
   console.log('todo get alltask', todoList)
   
