@@ -16,7 +16,7 @@
   top:108px;
   margin-right: 15px;
   font-family:$font-principal;
-  
+      cursor: pointer
 }
 
 
@@ -94,9 +94,11 @@ border-radius: 10px;
   }
 &__edit{
     width: 12px;
+        cursor: pointer
 }
 &__delete{
     width: 12px;
+    cursor: pointer
 }
     &__data {
     display: flex;
@@ -108,7 +110,8 @@ border-radius: 10px;
   }
 
     &__checked {
-   // padding-right: 5px;
+    cursor: pointer
+
   }
 &__name {
   font-size: 1.5rem;
@@ -116,6 +119,12 @@ border-radius: 10px;
 
 
 }
+
+.task__done {
+  text-decoration: line-through;
+  font-size: 1.5rem;
+}
+
 
 .hide {
   display: none;

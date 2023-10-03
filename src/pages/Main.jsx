@@ -33,9 +33,6 @@ function Main() {
     setTasks(data)})
 
   };
-  const handleDragStart = ()=>{
-  
-  }
 
   const handleClickDeleted = async (task) =>{
 
@@ -94,7 +91,7 @@ function Main() {
               tasklist={tasks.filter((task) => task.date === '')}
              onTaskChecked={handleTaskChecked}
               taskType={'No-date'}
-              dragstart={handleDragStart}
+
               onDelete={handleClickDeleted}
             />
           </section>
