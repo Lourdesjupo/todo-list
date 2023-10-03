@@ -3,6 +3,7 @@ import Main from './pages/Main';
 import AddTask from "./pages/AddTask";
 import EditTask from "./pages/EditTask";
 import Login from "./pages/login";
+import Register from "./pages/Register";
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
   return (
     <>
       <Routes>
-      <Route path='/login' element={<Login />}></Route>
-      <Route path='/' element={<Main />}></Route>
+      <Route path='/' element={<Login />}></Route>
+      <Route path='/register' element={<Register />}></Route>
+      <Route path='/tasks' element={<Main />}></Route>
       <Route  path="/addTask" element={<AddTask/>}></Route>
       <Route  path="/editTask/:id" element={<EditTask/>}></Route>
       </Routes>

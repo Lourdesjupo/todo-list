@@ -10,8 +10,8 @@ function EditTask() {
     date: '',
     name: '',
   });
-  const navigate = useNavigate()
-  console.log(editTask)
+  const navigate = useNavigate();
+  console.log(editTask);
   useEffect(() => {
     // eslint-disable-next-line react/prop-types
     getTask(id).then((data) => {
@@ -21,20 +21,19 @@ function EditTask() {
   }, []);
 
   async function handleClick(ev) {
-  ev.preventDefault()
-    console.log(editTask)
+    ev.preventDefault();
+    console.log(editTask);
     try {
-      await editItem(editTask)
+      await editItem(editTask);
       console.log('tarea creada');
-      navigate('/')
-
-    }catch(error){
-      console.error(error)
+      navigate('/tasks');
+    } catch (error) {
+      console.error(error);
     }
   }
 
   const handleDate = (ev) => {
-    console.log(ev.target.value, 'fecha')
+    console.log(ev.target.value, 'fecha');
     setEditTask({ ...editTask, date: ev.target.value });
   };
   const handleNameTask = (ev) => {
@@ -44,25 +43,25 @@ function EditTask() {
 
   return (
     <>
-      <header>
-        <h2 className='title_editTask '>Modifica tu tarea</h2>
-      </header>
+      
       <main>
-        <form>
-          <fieldset className='fieldset'>
-            <label htmlFor='date' className='fieldset_label'>
+        <section>
+          <form className='form__modifyTask'>
+            <fieldset className='fieldset'>
+              <h1 className='title__editTask '>Modify your task</h1>
+              <p className='title__editTask--title '>
+                You can change the date and description
+              </p>
               <input
                 type='date'
                 name='date'
                 id='date'
                 value={editTask.date}
                 onChange={handleDate}
-                className='fieldset_date'
+                className='fieldset__date'
               />
-            </label>
-            <label htmlFor='name_task' className='fieldset_label'>
               <textarea
-              className='fieldset_date'
+                className='fieldset__date'
                 name='name_task'
                 id=''
                 cols='30'
@@ -70,14 +69,19 @@ function EditTask() {
                 value={editTask.name}
                 onChange={handleNameTask}
               ></textarea>
-            </label>
-           <button className='button'onClick={handleClick}>Modificar</button>
-          <Link to={'/'}>
-            <button className='button'onClick={handleClick}>Cancelar</button>
-          </Link>
-          </fieldset>
-          
-        </form>
+            </fieldset>
+            <div className='buttons__form'>
+              <button className='btn_addTask' onClick={handleClick}>
+                Modificar
+              </button>
+              <Link to={'/tasks'}>
+                <button className='btn_cancel' onClick={handleClick}>
+                  Cancelar
+                </button>
+              </Link>
+            </div>
+          </form>
+        </section>
       </main>
     </>
   );

@@ -7,20 +7,12 @@ import taskChecked from '../services/Api_taskChecked';
 import deleteItem from '../services/Api_deteItem';
 
 
+
 function Main() {
   const [tasks, setTasks] = useState([]);
 
   //   const example = [
   //   {id:'1',date:'',name:'comprar comida gato',checked:'false'},
-  //   {id:'2',date:'30/8/2023',name:'sacar a pasear al perro',checked:'true'},
-  //   {id:'3',date:'',name:'colgar la ropa',checked:'true'},
-  //   {id:'4',date:'30/8/2023',name:'enviar un mail a Pascual',checked:'false'},
-  //   {id:'5',date:'12/10/2023',name:'reservar mesas para el sábado',checked:'false'},
-  //   {id:'6',date:'21/12/2023',name:'poner gasolina al coche',checked:'true'},
-  //   {id:'7',date:'',name:'Ir a la farmacia',checked:'false'},
-  //   {id:'8',date:'29/9/2023',name:'llamar a Gertrudis',checked:''},
-  //   {id:'9',date:'30/8/2023',name:'Ir al gym',checked:'false'},
-
   // ]
 
 

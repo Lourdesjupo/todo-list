@@ -11,7 +11,7 @@ function AddTask() {
     checked: false,
   });
   // console.log('esta es la tarea guardada en addTask', newTask);
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
 
@@ -25,69 +25,62 @@ function AddTask() {
   };
 
   const handleNewTaskClick = async (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
     try {
-      if(newTask.name ===''){
-        throw new Error('Rellena el nombre de la tarea')
+      if (newTask.name === '') {
+        throw new Error('Please fill in at least the description field');
       }
       await addNewTask({
         ...newTask,
         date: newTask.date === '' ? null : newTask.date,
       });
-      console.log('tarea creada')
-       navigate('/')
+      console.log('tarea creada');
+      navigate('/tasks');
     } catch (error) {
-      setErrorMsg(`Error al crear la tarea: ${error.message}` );
-      console.log('ERROR', error)
+      setErrorMsg(`Error: ${error.message}`);
+      console.log('ERROR', error);
     }
   };
 
   return (
     <>
-      <header>
-        <h1 className='title_addTask'>Añade tu tarea</h1>
-      </header>
       <main>
         <section>
-          <form className='form_addTask'>
+          <form className='form__addTask'>
             <fieldset className='fiedset'>
-              <label className='fiedset_label' htmlFor='date'>
-                {' '}
-                Date
-                <input
-                  className='fiedset_date'
-                  type='date'
-                  name='date'
-                  id='date'
-                  onChange={handleFormDate}
-                />
-              </label>
-              <label className='fiedset_label' htmlFor='nameTask'>
-                {' '}
-                Task
-                <textarea
-                  className='fiedset_name'
-                  name='nameTask'
-                  id='task'
-                  cols='30'
-                  rows='10'
-                  placeholder='write here what do you have to do'
-                  onChange={handleFormName}
-                ></textarea>
-              </label>
+              <h1 className='title_addTask'>Add your task</h1>
+              <p className='title_addTask--title'>
+                Indicate date and the task description
+              </p>
+              <input
+                className='fiedset__date'
+                type='date'
+                name='date'
+                id='date'
+                onChange={handleFormDate}
+              />
+
+              <textarea
+                className='fiedset__name'
+                name='nameTask'
+                id='task'
+                cols='30'
+                rows='10'
+                placeholder='Write here what do you have to do'
+                onChange={handleFormName}
+              ></textarea>
             </fieldset>
 
-            <button className='button btn_addTask' onClick={handleNewTaskClick}>
-              Add task
-            </button>
-            <Link className='button btn_addTask' to={'/'}>
-              cancelar
-            </Link>
+            <div className="buttons__form">
+              <button className='btn_addTask' onClick={handleNewTaskClick}>
+                Add task
+              </button>
+              <Link className='btn_cancel' to={'/tasks'}>
+                Cancel
+              </Link>
+            </div>
           </form>
-          {errorMsg && (
-            <div className='error_addTask'>{errorMsg}</div>
-          )}
-         
+          {errorMsg && <div className='error_addTask'>{errorMsg}</div>}
         </section>
       </main>
     </>

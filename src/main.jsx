@@ -4,8 +4,9 @@ import './styles/main.scss'
 import './styles/Login.scss'
 import { HashRouter } from 'react-router-dom'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <HashRouter>
-    <App />
+    <App/>
   </HashRouter>
 )

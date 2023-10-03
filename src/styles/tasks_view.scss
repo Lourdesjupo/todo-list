@@ -15,6 +15,7 @@
   right:0px;
   top:108px;
   margin-right: 15px;
+  font-family:$font-principal;
   
 }
 
@@ -27,9 +28,10 @@ width:312px;
 margin: 10px;
 
 &--span {
-    font-size:1.4rem;
+    font-size:1.5rem;
     padding-left: 5px;
-    
+    font-weight:500;
+
 
 }
 
@@ -91,10 +93,10 @@ border-radius: 10px;
     // padding-bottom: 8px;
   }
 &__edit{
-    width: 10px;
+    width: 12px;
 }
 &__delete{
-    width: 10px;
+    width: 12px;
 }
     &__data {
     display: flex;
@@ -108,11 +110,14 @@ border-radius: 10px;
     &__checked {
    // padding-right: 5px;
   }
-
+&__name {
+  font-size: 1.5rem;
+}
 
 
 }
 
 .hide {
   display: none;
+
 }

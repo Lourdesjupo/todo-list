@@ -14,7 +14,7 @@ const newLogin = async (data) => {
     localStorage.setItem('jwt', JSON.stringify(dataResponse.token));
     localStorage.setItem('name', JSON.stringify(dataResponse.user));
      console.log(dataResponse, 'token');
-    return window.location.href = 'http://localhost:5173/todo-list'
+    return (window.location.href = 'http://localhost:5173/todo-list#tasks');
   } catch (error) {
     console.error('error adding new Login:', error);
   }
