@@ -1,6 +1,6 @@
 import '../styles/main.scss';
 import Tasklist from '../components/Tasklist';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getAllTasks from '../services/Api_allTasks';
 import taskChecked from '../services/Api_taskChecked';
@@ -14,7 +14,7 @@ function Main() {
   //   const example = [
   //   {id:'1',date:'',name:'comprar comida gato',checked:'false'},
   // ]
-
+  const navigate = useNavigate()
 
   useEffect(() => {
     getAllTasks().then((data) => {
@@ -27,7 +27,7 @@ function Main() {
 // data
 
   const handleTaskChecked = async (id,check) => {
-    console.log(check,'check')
+
     await taskChecked({id, check})
     getAllTasks().then((data) => {
     setTasks(data)})
@@ -44,15 +44,20 @@ function Main() {
   function name () {
     const userName = localStorage.getItem('name').slice(0,-1).slice(1)
     return  userName.charAt(0).toUpperCase()+ userName.slice(1)
+  
+  }
 
-   
+  function handleExit() {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('name')
+    navigate('/')
   }
 
 //DATES
   const time = Date.now();
   const date = new Date(time);
   const today = date.toLocaleDateString();
-  // console.log('TODAY', today);
+
 
 
 
@@ -60,6 +65,7 @@ function Main() {
     <>
       <header className='header'>
         <p className='header__title'>Hola {name()}!</p>
+        <button className='header__logout'onClick={handleExit}>Exit</button>
       </header>
       <main>
         <section className='button'>

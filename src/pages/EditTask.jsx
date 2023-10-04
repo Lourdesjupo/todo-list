@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import getTask from '../services/Api_getTask';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate } from 'react-router-dom';
 import editItem from '../services/Api_editItem';
 
 // eslint-disable-next-line react/prop-types
@@ -11,7 +11,7 @@ function EditTask() {
     name: '',
   });
   const navigate = useNavigate();
-  console.log(editTask);
+
   useEffect(() => {
     // eslint-disable-next-line react/prop-types
     getTask(id).then((data) => {
@@ -22,10 +22,10 @@ function EditTask() {
 
   async function handleClick(ev) {
     ev.preventDefault();
-    console.log(editTask);
+
     try {
       await editItem(editTask);
-      console.log('tarea creada');
+
       navigate('/tasks');
     } catch (error) {
       console.error(error);
@@ -33,13 +33,17 @@ function EditTask() {
   }
 
   const handleDate = (ev) => {
-    console.log(ev.target.value, 'fecha');
+
     setEditTask({ ...editTask, date: ev.target.value });
   };
   const handleNameTask = (ev) => {
     const currentValue = ev.target.value;
     setEditTask({ ...editTask, name: currentValue });
   };
+
+  const handleClickCancel =() =>{
+    navigate('/tasks')
+  }
 
   return (
     <>
@@ -74,11 +78,10 @@ function EditTask() {
               <button className='btn_addTask' onClick={handleClick}>
                 Modificar
               </button>
-              <Link to={'/tasks'}>
-                <button className='btn_cancel' onClick={handleClick}>
+              <button className='btn_cancel' onClick={handleClickCancel}>
                   Cancelar
                 </button>
-              </Link>
+              
             </div>
           </form>
         </section>

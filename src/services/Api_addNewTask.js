@@ -1,5 +1,5 @@
 const addNewTask =async (data) =>{
-  console.log('recibo los datos de add task',data)
+
   try{
     await fetch('http://localhost:4500/api/addNewTask', {
       method: 'POST',

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function Task ({task, onChecked, onDelete }) {
   function handleClick (id, check){
     check = check === 0 ? 1:0
-    console.log(check)
+
     return onChecked(id, check)
   }
   // function handleClickDelete (task){
@@ -35,7 +35,7 @@ function Task ({task, onChecked, onDelete }) {
       <img className="task__delete"src="./xmark-solid.svg" onClick={()=>{handleDeleteId(task.id)}}alt="borrar"/>
     </div>
     <div className="task__data">
-      <p className={task.checked === 0 ? "task__name": "task__done"}>{task.name}</p>
+      <p className={task.checked === 0 ? "task__name": "task__done" }>{task.name}</p>
       <img className="task__checked" style={task__checked} src={task.checked === 0 ? './uncheck.svg' : './check-solid.svg'} onClick={()=>{handleClick(task.id, task.checked)}}></img>
     </div>
     

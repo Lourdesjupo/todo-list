@@ -10,7 +10,7 @@ function AddTask() {
     date: '',
     checked: false,
   });
-  // console.log('esta es la tarea guardada en addTask', newTask);
+
   const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
@@ -34,11 +34,11 @@ function AddTask() {
         ...newTask,
         date: newTask.date === '' ? null : newTask.date,
       });
-      console.log('tarea creada');
+
       navigate('/tasks');
     } catch (error) {
       setErrorMsg(`Error: ${error.message}`);
-      console.log('ERROR', error);
+
     }
   };
 

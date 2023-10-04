@@ -1,6 +1,5 @@
 
 const newRegister = async (data) => {
-  console.log('recibo los datos de register', data);
   try {
      await fetch('http://localhost:4500/api/register', {
       method: 'POST',

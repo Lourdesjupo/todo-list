@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   const [login, setLogin] = useState();
+  const [error, setError] =useState();
 
 
   const handleNameLogin = (ev) => {
@@ -14,9 +15,16 @@ function Login() {
   const handlePassLogin = (ev) => {
     setLogin({ ...login, pass: ev.target.value });
   };
-  const handleSubmitLogin = (ev) => {
+  const handleSubmitLogin = async (ev) => {
     ev.preventDefault();
-    newLogin(login);
+    try {
+   const data =  await newLogin(login)
+   if (data) {
+    setError(data)
+   }
+    }catch (error) {
+      setError(`try again, ${error}`)
+    }
   };
   
 
@@ -59,8 +67,11 @@ function Login() {
               <span className='login__register'> or <Link to={'/register'}><a className='login__register--link' href="">Register</a></Link></span>
             </div>
           </form>
+          {error && <div className='error_addTask'>{error}</div>}
         </div>
+
       </section>
+           
     </>
   );
 }

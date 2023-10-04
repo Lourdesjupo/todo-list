@@ -6,7 +6,7 @@ const getAllTasks = async ()=> {
     headers: {"Authorization": localStorage.getItem("jwt")}
   });
   const todoList = await response.json();
-  console.log('todo get alltask', todoList)
+
   
   const result = todoList.map((el)=>{
     const date = new Date(el.task_date)
