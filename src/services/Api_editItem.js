@@ -5,11 +5,11 @@ async function editItem(item) {
     item.date = ndate
 
     try {
-        await fetch(`http://localhost:4500/api/editItem`, {
+        await fetch(`${import.meta.env.TDLIST_API}/api/editItem`, {
           method: 'PUT',
           headers: {
             'content-type': 'application/json',
-            "Authorization": localStorage.getItem('jwt'),
+            Authorization: localStorage.getItem('jwt'),
           },
           body: JSON.stringify(item),
         });

@@ -1,9 +1,9 @@
 
 const getAllTasks = async ()=> {
   // const userId = '1'
-  const response = await fetch(`http://localhost:4500/api/allTasks`, {
-    method:'GET',  
-    headers: {"Authorization": localStorage.getItem("jwt")}
+  const response = await fetch(`${import.meta.env.TDLIST_API}/api/allTasks`, {
+    method: 'GET',
+    headers: { Authorization: localStorage.getItem('jwt') },
   });
   const todoList = await response.json();
 

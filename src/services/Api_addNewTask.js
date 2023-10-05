@@ -1,9 +1,12 @@
 const addNewTask =async (data) =>{
 
   try{
-    await fetch('http://localhost:4500/api/addNewTask', {
+    await fetch(`${import.meta.env.TDLIST_API}/api/addNewTask`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json',"Authorization": localStorage.getItem("jwt")},
+      headers: {
+        'content-type': 'application/json',
+        Authorization: localStorage.getItem('jwt'),
+      },
       body: JSON.stringify(data),
     });
 
