@@ -1,7 +1,7 @@
 async function deleteItem(id) {
 
   try {
-    await fetch(`${import.meta.env.TDLIST_API}/api/deleteTask/${id}`, {
+    await fetch(`${import.meta.env.VITE_TDLIST_API}/api/deleteTask/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     });

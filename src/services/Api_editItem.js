@@ -5,7 +5,7 @@ async function editItem(item) {
     item.date = ndate
 
     try {
-        await fetch(`${import.meta.env.TDLIST_API}/api/editItem`, {
+        await fetch(`${import.meta.env.VITE_TDLIST_API}/api/editItem`, {
           method: 'PUT',
           headers: {
             'content-type': 'application/json',

@@ -1,7 +1,7 @@
 const addNewTask =async (data) =>{
 
   try{
-    await fetch(`${import.meta.env.TDLIST_API}/api/addNewTask`, {
+    await fetch(`${import.meta.env.VITE_TDLIST_API}/api/addNewTask`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

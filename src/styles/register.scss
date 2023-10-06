@@ -14,9 +14,9 @@
   justify-content: space-between;
   align-items: baseline;
   width: 320px;
-  @include tablet() {
-    width: 500px;
-  }
+  // @include tablet() {
+  //   width: 500px;
+  // }
   
   &__option {
     min-width: 100vw;
@@ -39,23 +39,23 @@
   }
   
   &__inputs{
-    width: 300px;
-    display: flex;
-    justify-content: space-between;
+    // width: 300px;
+    // display: flex;
+    // justify-content: space-between;
     margin-bottom: 15px;
 
 
   }
   
   &__email, &__password, &__name {
-    width: 300px;
+    width: 305px;
     font-size: 1.4rem;
     outline-color: $terciary-color;
     color:$font-color-primary;
   }
 
   &__btn {
-    width: 300px;
+    width: 315px;
     margin-top: 20px;
     display: flex;
     justify-content: space-around;
@@ -65,7 +65,7 @@
 
   &__button {
     padding:5px;
-    width: 300px;
+    width: 305px;
     font-size: 1.6rem;
     color: $principal-color;
     background-color: $secondary-color;

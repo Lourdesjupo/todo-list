@@ -1,5 +1,7 @@
 async function getTask(id) {
-  const response = await fetch(`${import.meta.env.TDLIST_API}/api/getTask/${id}`);
+  const response = await fetch(
+    `${import.meta.env.VITE_TDLIST_API}/api/getTask/${id}`
+  );
   const data = await response.json();
   const dataset = data.map((el) => {
 

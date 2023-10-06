@@ -1,7 +1,7 @@
 const taskChecked = async (data)=>{
 
   try { 
-    await fetch(`${import.meta.env.TDLIST_API}/api/taskchecked`, {
+    await fetch(`${import.meta.env.VITE_TDLIST_API}/api/taskchecked`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(data),
