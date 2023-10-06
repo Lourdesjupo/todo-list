@@ -8,7 +8,7 @@ const newRegister = async (data) => {
      });
 
      return (window.location.href =
-       `${import.meta.env.TDLIST_API}/todo-list#tasks`);
+       `${import.meta.env.TDLIST}/todo-list#tasks`);
   } catch (error) {
     console.error('error adding new register:', error);
   }

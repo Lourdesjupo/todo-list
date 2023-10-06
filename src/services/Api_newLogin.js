@@ -17,7 +17,7 @@ const newLogin = async (data) => {
     localStorage.setItem('jwt', JSON.stringify(dataResponse.token));
     localStorage.setItem('name', JSON.stringify(dataResponse.user));
     return (window.location.href =
-      `${import.meta.env.TDLIST_API}/todo-list#tasks`);
+      `${import.meta.env.TDLIST}/todo-list#tasks`);
   } catch (error) {
     return ('error adding new Login:', error);
   }
