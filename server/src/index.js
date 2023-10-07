@@ -53,22 +53,22 @@ const verifyToken = (token) => {
   }
 };
 
-const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization'];
+// const authenticateToken = (req, res, next) => {
+//   const token = req.headers['authorization'];
 
-  if (!token) {
-    return res.status(401).json({ error: 'Token no proporcionado' });
-  }
+//   if (!token) {
+//     return res.status(401).json({ error: 'Token no proporcionado' });
+//   }
 
-  const decoded = verifyToken(token);
+//   const decoded = verifyToken(token);
 
-  if (!decoded) {
-    return res.status(401).json({ error: 'Token inválido' });
-  }
+//   if (!decoded) {
+//     return res.status(401).json({ error: 'Token inválido' });
+//   }
 
-  req.user = decoded;
-  next();
-};
+//   req.user = decoded;
+//   next();
+// };
 
 //EndPoints
 

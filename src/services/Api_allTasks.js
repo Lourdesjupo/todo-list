@@ -9,7 +9,7 @@ const getAllTasks = async ()=> {
     }
   );
   const todoList = await response.json();
-
+console.log(todoList)
   
   const result = todoList.map((el)=>{
     const date = new Date(el.task_date)
@@ -19,7 +19,7 @@ const getAllTasks = async ()=> {
       name: el.task_name,
       checked: el.task_checked,
     };})
-  return result;
+  return result;  
 
 }
 

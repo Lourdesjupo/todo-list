@@ -5,9 +5,8 @@ const newRegister = async (data) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(data),
     });
-
-    return (window.location.href = `${
-      import.meta.env.VITE_TDLIST}/todo-list#tasks`);
+      window.location.href = `${import.meta.env.VITE_TDLIST}#tasks`;
+    return (window.location.href);
   } catch (error) {
     console.error('error adding new register:', error);
   }

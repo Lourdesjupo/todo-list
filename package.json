@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build_prod": "vite build -m prod",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-     "githubpages": "rm -rf dist && rm -rf docs && npm run build && mv dist docs && git add docs/* && git commit -m \"Publish in GitHub Pages\" && git push"
+    "githubpages": "rm -rf dist && rm -rf docs && npm run build_prod && mv dist docs && git add docs/* && git commit -m \"Publish in GitHub Pages\" && git push"
   },
   "dependencies": {
     "express": "^4.18.2",

@@ -65,7 +65,7 @@ function Main() {
     <>
       <header className='header'>
         <p className='header__title'>Hola {name()}!</p>
-        <button className='header__logout'onClick={handleExit}>Exit</button>
+        <button className='header__logout'onClick={handleExit}>Logout</button>
       </header>
       <main>
         <section className='button'>
