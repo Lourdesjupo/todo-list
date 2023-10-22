@@ -41,6 +41,7 @@ async function connectDb() {
   return connection;
 }
 
+
 //JWT generate and verify Tokens
 const key = process.env.KEY
 
@@ -208,9 +209,10 @@ server.post('/api/register', async (req, res) => {
         mail,
         passwordHash,
       ]);      
+      console.log(result, 'ES EL RESULTADO')
       connect.end();
       res.cookie("jwt",token)
-      res.json({msg: "success", token: token, token_id: result.insertId});
+      res.json({msg: "success", token: token, user: username, id:result.isertId});
     }
   });
 
