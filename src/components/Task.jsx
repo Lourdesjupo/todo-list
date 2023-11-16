@@ -11,24 +11,29 @@ function Task ({task, onChecked, onDelete }) {
 
     return onChecked(id, check)
   }
-  // function handleClickDelete (task){
-  //   return onDelete(task)
-  // }
+
   const handleDeleteId = (id)=> {
     return onDelete(id)
   }
-
-
   const task__checked = {
 
 		width: "20px"
   }
   const id = task.id
 
+  //param (date), return boolean
+  function pastTask (dateStr)  {
+    const dateParts = dateStr.split ('/')
+    const date = new Date (`${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`)
+    const now = new Date () 
+    return date < now 
+
+  }
+
   return (
   <li className="task">
     <div className="task__head">
-      <p className="task__date">{task.date}</p>
+      <p className="task__date" style={{color: pastTask(task.date)? 'red': undefined}}>{task.date}</p>
       <Link to={`/editTask/${id}`}>
        <img className="task__edit" src="./pen-solid.svg" alt="editar"/>
       </Link>

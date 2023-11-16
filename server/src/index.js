@@ -11,7 +11,6 @@ require('dotenv').config();
 
 const server = express();
 
-
 //configuración de servidor
 
 server.use(cors());
@@ -41,9 +40,8 @@ async function connectDb() {
   return connection;
 }
 
-
 //JWT generate and verify Tokens
-const key = process.env.KEY
+const key = process.env.KEY;
 
 const verifyToken = (token) => {
   try {
@@ -74,22 +72,21 @@ const verifyToken = (token) => {
 //EndPoints
 
 //Get all Tasks
-server.get('/api/allTasks',
-async (req, res) => {
-const resToken = JSON.parse(req.get('Authorization'));
-console.log('RESTOKEN', resToken)
+server.get('/api/allTasks', async (req, res) => {
+  const resToken = JSON.parse(req.get('Authorization'));
+  console.log('RESTOKEN', resToken);
   const decoded = verifyToken(resToken);
-  if(!decoded){
-  res.status(403)
-  res.json('login no es correcto')
-    return
+  if (!decoded) {
+    res.status(403);
+    res.json('login no es correcto');
+    return;
   }
   const connect = await connectDb();
-  console.log(decoded, 'decoded')
+  console.log(decoded, 'decoded');
   const id = decoded.id;
   const allTasks = 'select * from todolist_todo where fk_user_id = ?';
   const [tasks] = await connect.query(allTasks, [id]);
-  console.log(tasks)
+  console.log(tasks);
   connect.end();
   res.json(tasks);
   //console.log(typeof(tasks[4].task_date), tasks[4].task_date, tasks[4].task_id)
@@ -119,7 +116,7 @@ server.post('/api/addNewTask', async (req, res) => {
   }
   const id = decoded.id;
 
-  console.log('holi');
+  console.log('holi', decoded);
   const isertQuery =
     'INSERT INTO todolist_todo (task_name, task_date, task_checked, fk_user_id) VALUES (?,?,?,?)';
   const connected = await connectDb();
@@ -154,7 +151,7 @@ server.put('/api/editItem', async (req, res) => {
     item.name,
     item.date,
     item.id,
-   ]);
+  ]);
   connection.end();
   res.json(result);
 });
@@ -194,71 +191,72 @@ server.post('/api/register', async (req, res) => {
   const passwordHash = await bcrypt.hash(pass, 15);
   const addRegister =
     'INSERT INTO users_todo (user_name, user_mail, user_password) VALUES (?,?,?)';
-    let user = {
-      mail,
-      passwordHash
-    };
+  const connect = await connectDb();
+  const [result] = await connect.query(addRegister, [
+    username,
+    mail,
+    passwordHash,
+  ]);
+  console.log(result, 'ES EL RESULTADO');
+  connect.end();
 
-    jwt.sign(user, key, async (err, token) => {
-      if (err) {
-        res.status(400).send({ msg: 'Error' });
-      } else {
-      const connect = await connectDb();
-      const [result] = await connect.query(addRegister, [
-        username,
-        mail,
-        passwordHash,
-      ]);      
-      console.log(result, 'ES EL RESULTADO')
-      connect.end();
-      res.cookie("jwt",token)
-      res.json({msg: "success", token: token, user: username, id:result.isertId});
+
+  let user = {
+    mail,
+    passwordHash,
+    id: result.insertId,
+  };
+
+  jwt.sign(user, key, (err, token) => {
+    if (err) {
+      res.status(400).send({ msg: 'Error' });
+    } else {
+      res.cookie('jwt', token);
+      res.json({
+        msg: 'success',
+        token: token,
+        user: username
+      });
     }
   });
-
 });
-
 
 //Endpoint login
 
-server.post ('/api/login', async(req,res)=>{
-  const body = req.body
-  console.log('RECIBIDO LOGIN', body)
-  console.log('hola')
+server.post('/api/login', async (req, res) => {
+  const body = req.body;
+  console.log('RECIBIDO LOGIN', body);
+  console.log('hola');
 
   //user exist BBDD
   let verifyUserQuery = 'SELECT *FROM users_todo WHERE user_mail = ?';
-  const connect = await connectDb()
-  const [users, fields] = await connect.query (verifyUserQuery, [body.mail])
-  const user = users[0]
-  console.log(user, 'usuario') 
-  
+  const connect = await connectDb();
+  const [users, fields] = await connect.query(verifyUserQuery, [body.mail]);
+  const user = users[0];
+  console.log(user, 'usuario');
+
   //verify pass
   const verifyPass =
-  user === null ? false : await bcrypt.compare(body.pass, user.user_password)
-  
-  
-  if(!(user&&verifyPass)) {
-    console.log('ERROR EN EL LOGIN')
-    return res.status(401).json(
-      {error: "Invalid username or password"}
-      )
+    user === null ? false : await bcrypt.compare(body.pass, user.user_password);
+
+  if (!(user && verifyPass)) {
+    console.log('ERROR EN EL LOGIN');
+    return res.status(401).json({ error: 'Invalid username or password' });
   }
-    
-    const userForToken = {
-      username: user.user_mail,
-      pass: user.user_password,
-      id: user.user_id
-    }
-    console.log('USERFORTOKEN', userForToken)
-    
-    const token = jwt.sign(userForToken, key, {
-      expiresIn: '1h', // El token expira en 1 hora
-    }); 
-    
-    console.log('VERIFY PASS', verifyPass)
-    
-    connect.end();
-    res.status(200).json({token: token, user: user.user_name})
-    
-  })
+
+  const userForToken = {
+    username: user.user_mail,
+    pass: user.user_password,
+    id: user.user_id,
+  };
+  console.log('USERFORTOKEN', userForToken);
+
+  const token = jwt.sign(userForToken, key, {
+    expiresIn: '1h', // El token expira en 1 hora
+  });
+
+  console.log('VERIFY PASS', verifyPass);
+
+  connect.end();
+  res.status(200).json({ token: token, user: user.user_name });
+});

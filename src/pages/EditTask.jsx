@@ -76,10 +76,10 @@ function EditTask() {
             </fieldset>
             <div className='buttons__form'>
               <button className='btn_addTask' onClick={handleClick}>
-                Modificar
+                Modify
               </button>
               <button className='btn_cancel' onClick={handleClickCancel}>
-                  Cancelar
+                  Cancel
                 </button>
               
             </div>

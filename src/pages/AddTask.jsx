@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 // eslint-disable-next-line react/prop-types
 function AddTask() {
   const [newTask, setNewTask] = useState({
-    fk_user: 1,
     name: '',
     date: '',
     checked: false,
