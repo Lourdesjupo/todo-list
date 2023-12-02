@@ -200,7 +200,7 @@ server.post('/api/register', async (req, res) => {
   const mail = req.body.mail;
   const pass = req.body.pass;
   //@todo increase saltRounds when deploy in a proper hosting, for now free Render account is too slow
-  const passwordHash = await bcrypt.hash(pass, 2);
+  const passwordHash = await bcrypt.hash(pass, 1);
   const addRegister =
     'INSERT INTO users_todo (user_name, user_mail, user_password) VALUES (?,?,?)';
 
