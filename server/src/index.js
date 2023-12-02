@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+
 //Arranque servidor
 
 const server = express();
@@ -21,9 +22,16 @@ server.use(cookieParser());
 
 const port = process.env.PORT;
 console.log(port);
-server.listen(port, () => {
-  console.log(`servidor arrancado: http://localhost:${port}`);
-});
+let connect;
+
+(async ()=>{
+   connect = await connectDb();
+  
+  server.listen(port, () => {
+    console.log(`servidor arrancado: http://localhost:${port}`);
+  });
+  
+})();
 
 //conexión a BBDD
 
@@ -230,7 +238,7 @@ server.post('/api/login', async (req, res) => {
 
   //user exist BBDD
   let verifyUserQuery = 'SELECT *FROM users_todo WHERE user_mail = ?';
-  const connect = await connectDb();
+  
   const [users, fields] = await connect.query(verifyUserQuery, [body.mail]);
   const user = users[0];
   console.log(user, 'usuario');
