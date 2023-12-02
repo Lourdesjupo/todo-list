@@ -34,9 +34,9 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   waitForConnections: true,
-  connectionLimit: 10,
-  maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-  idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+  connectionLimit: 1,
+  maxIdle: 1, // max idle connections, the default value is the same as `connectionLimit`
+  idleTimeout: 300000, // idle connections timeout, in milliseconds, the default value 60000
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
@@ -237,14 +237,15 @@ server.post('/api/login', async (req, res) => {
   const body = req.body;
   console.log('RECIBIDO LOGIN', body);
   console.log('hola');
-
+  let startTime = process.hrtime.bigint();
   //user exist BBDD
   let verifyUserQuery = 'SELECT *FROM users_todo WHERE user_mail = ?';
-
   const [users, fields] = await pool.query(verifyUserQuery, [body.mail]);
   const user = users[0];
   console.log(user, 'usuario');
-
+  let stopTime = process.hrtime.bigint();
+  console.log('solicita usuario a BBDD', stopTime - startTime);
+  startTime=stopTime
   //verify pass
   const verifyPass =
     user === null ? false : await bcrypt.compare(body.pass, user.user_password);
@@ -253,7 +254,9 @@ server.post('/api/login', async (req, res) => {
     console.log('ERROR EN EL LOGIN');
     return res.status(401).json({ error: 'Invalid username or password' });
   }
-
+   stopTime = process.hrtime.bigint();
+  console.log('verifica si el pass es correcto', stopTime - startTime);
+  startTime = stopTime;
   const userForToken = {
     username: user.user_mail,
     pass: user.user_password,
@@ -264,7 +267,9 @@ server.post('/api/login', async (req, res) => {
   const token = jwt.sign(userForToken, key, {
     expiresIn: '1h', // El token expira en 1 hora
   });
-
+   stopTime = process.hrtime.bigint();
+    console.log('firma token', stopTime - startTime);
+    startTime = stopTime;
   console.log('VERIFY PASS', verifyPass);
   res.status(200).json({ token: token, user: user.user_name });
 });
