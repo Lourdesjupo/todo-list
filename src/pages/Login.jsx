@@ -77,7 +77,7 @@ function Login() {
               </button>
               <span className='login__register'> or <Link className='login__register--link' to={'/register'}>Register</Link></span>
             </div>
-        <button className='login__button button' onClick={handleSubmitLoginDemo}>
+        <button className='login__Demobutton button' onClick={handleSubmitLoginDemo}>
           Enter with demo user
         </button>
           </form>
