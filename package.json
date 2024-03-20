@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --base /todo-list",
     "build": "vite build",
     "build_prod": "vite build -m prod",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",

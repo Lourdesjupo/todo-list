@@ -42,20 +42,7 @@ const pool = mysql.createPool({
   keepAliveInitialDelay: 0,
 });
 
-//conexión a BBDD
 
-// async function connectDb() {
-//   const connection = await mysql.createConnection({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_DATABASE,
-//   });
-
-//   await connection.connect();
-//   console.log(`Conectada a la BBDD ${connection.threadId}`);
-//   return connection;
-// }
 
 //JWT generate and verify Tokens
 const key = process.env.KEY;
@@ -101,19 +88,20 @@ server.get('/api/allTasks', async (req, res) => {
 
   console.log(decoded, 'decoded');
   const id = decoded.id;
-  const allTasks = 'select * from todolist_todo where fk_user_id = ?';
+  const allTasks =
+    'select * from todolist_todo where fk_user_id = ? order by task_date asc';
   const [tasks] = await pool.query(allTasks, [id]);
   console.log(tasks);
 
   res.json(tasks);
-  //console.log(typeof(tasks[4].task_date), tasks[4].task_date, tasks[4].task_id)
+  //console.log(typeof(tasks[4].task_date), tasks[4].task_date, tasks[4].id)
 });
 
 //getTask
 
 server.get('/api/getTask/:id', async (req, res) => {
   const id = req.params.id;
-  const queryTaskId = 'select * from todolist_todo where task_id = ?';
+  const queryTaskId = 'select * from todolist_todo where id = ?';
   const [result] = await pool.query(queryTaskId, [id]);
 
   res.json(result);
@@ -122,6 +110,7 @@ server.get('/api/getTask/:id', async (req, res) => {
 //Add New Task
 
 server.post('/api/addNewTask', async (req, res) => {
+  console.log('/api/addNewTask');
   const resToken = JSON.parse(req.get('Authorization'));
   console.log('RESTOKEN', resToken);
   const decoded = verifyToken(resToken);
@@ -158,10 +147,9 @@ server.put('/api/editItem', async (req, res) => {
     res.json('login no es correcto');
     return;
   }
-
   const item = req.body;
   const queryUpdate =
-    'UPDATE todolist_todo  SET  task_name = ?, task_date = ? WHERE task_id = ?';
+    'UPDATE todolist_todo  SET  task_name = ?, task_date = ? WHERE id = ?';
   const [result] = await pool.query(queryUpdate, [
     item.name,
     item.date,
@@ -176,7 +164,7 @@ server.put('/api/taskchecked', async (req, res) => {
   const data = req.body;
   console.log(data.check);
   const queryUpdateCheck =
-    'UPDATE todolist_todo SET task_checked=? where task_id=?';
+    'UPDATE todolist_todo SET task_checked=? where id=?';
 
   const [result] = await pool.query(queryUpdateCheck, [data.check, data.id]);
 
@@ -187,7 +175,7 @@ server.put('/api/taskchecked', async (req, res) => {
 server.delete(`/api/deleteTask/:id`, async (req, res) => {
   const id = req.params.id;
   console.log(id, 'hola id');
-  const deleteQuery = 'DELETE FROM todolist_todo where task_id= ?';
+  const deleteQuery = 'DELETE FROM todolist_todo where id= ?';
 
   const [result] = await pool.query(deleteQuery, [id]);
 
@@ -260,13 +248,23 @@ server.post('/api/login', async (req, res) => {
   const userForToken = {
     username: user.user_mail,
     pass: user.user_password,
-    id: user.user_id,
+    id: user.id,
   };
   console.log('USERFORTOKEN', userForToken);
+  let token = undefined
+  if(userForToken.username ==='prueba@mail.com') {
+     token = jwt.sign(userForToken, key, {
+      expiresIn: '100000h', // El token expira en 1 hora
+    });
+    console.log('manolo')
 
-  const token = jwt.sign(userForToken, key, {
+  } else {
+   token = jwt.sign(userForToken, key, {
     expiresIn: '1h', // El token expira en 1 hora
   });
+
+  }
+
    stopTime = process.hrtime.bigint();
     console.log('firma token', stopTime - startTime);
     startTime = stopTime;

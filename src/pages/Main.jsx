@@ -1,71 +1,65 @@
 import '../styles/main.scss';
 import Tasklist from '../components/Tasklist';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import getAllTasks from '../services/Api_allTasks';
 import taskChecked from '../services/Api_taskChecked';
 import deleteItem from '../services/Api_deteItem';
 
-
-
 function Main() {
+  console.log('me estoy pintando')
   const [tasks, setTasks] = useState([]);
 
   //   const example = [
   //   {id:'1',date:'',name:'comprar comida gato',checked:'false'},
   // ]
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllTasks().then((data) => {
       setTasks(data);
-
     });
-  },[]);
-  
+  }, []);
 
-// data
+  // data
 
-  const handleTaskChecked = async (id,check) => {
-
-    await taskChecked({id, check})
+  const handleTaskChecked = async (id, check) => {
+    await taskChecked({ id, check });
     getAllTasks().then((data) => {
-    setTasks(data)})
-
+      setTasks(data);
+    });
   };
 
-  const handleClickDeleted = async (task) =>{
-
-   await deleteItem(task)
+  const handleClickDeleted = async (task) => {
+    await deleteItem(task);
     getAllTasks().then((data) => {
-    setTasks(data)})
-  }
+      setTasks(data);
+    });
+  };
 
-  function name () {
-    const userName = localStorage.getItem('name').slice(0,-1).slice(1)
-    return  userName.charAt(0).toUpperCase()+ userName.slice(1)
-  
+  function name() {
+    const userName = localStorage.getItem('name').slice(0, -1).slice(1);
+    return userName.charAt(0).toUpperCase() + userName.slice(1);
   }
 
   function handleExit() {
     localStorage.removeItem('jwt');
-    localStorage.removeItem('name')
-    navigate('/')
+    localStorage.removeItem('name');
+    navigate('/');
   }
 
-//DATES
+  //DATES
   const time = Date.now();
   const date = new Date(time);
   const today = date.toLocaleDateString();
-
-
-
 
   return (
     <>
       <header className='header'>
         <p className='header__title'>Hola {name()}!</p>
-        <button className='header__logout'onClick={handleExit}>Logout</button>
+        <button className='header__logout' onClick={handleExit}>
+          Logout
+        </button>
       </header>
       <main>
         <section className='button'>
@@ -91,23 +85,21 @@ function Main() {
             </button>
           </Link>
         </section>
-        <div className="sections">
+        <div className='sections'>
           <section className='no-date'>
             <Tasklist
               tasklist={tasks.filter((task) => task.date === '')}
-             onTaskChecked={handleTaskChecked}
+              onTaskChecked={handleTaskChecked}
               taskType={'No-date'}
-
               onDelete={handleClickDeleted}
             />
           </section>
           <section className='todo-today'>
             <Tasklist
               tasklist={tasks.filter((task) => task.date === today)}
-             onTaskChecked={handleTaskChecked}
+              onTaskChecked={handleTaskChecked}
               taskType={'Todo-Today'}
               onDelete={handleClickDeleted}
-
             />
           </section>
           <section className='todo-future'>
@@ -118,7 +110,6 @@ function Main() {
               onTaskChecked={handleTaskChecked}
               taskType={'Todo-Future'}
               onDelete={handleClickDeleted}
-
             />
           </section>
         </div>

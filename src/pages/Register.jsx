@@ -2,7 +2,7 @@ import { useState } from 'react';
 import newRegister from '../services/Api_newRegister';
 function Register() {
   const [register, setRegister] = useState();
-
+  console.log('registro me pinto')
   const handleNameRegister = (ev) => {
     setRegister({ ...register, name: ev.target.value });
   };

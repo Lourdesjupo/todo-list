@@ -8,7 +8,6 @@ function Login() {
   const [login, setLogin] = useState();
   const [error, setError] =useState();
 
-
   const handleNameLogin = (ev) => {
     setLogin({ ...login, mail: ev.target.value });
   };
@@ -26,8 +25,18 @@ function Login() {
       setError(`try again, ${error}`)
     }
   };
-  
 
+  const handleSubmitLoginDemo = async (ev) => {
+    ev.preventDefault();
+    try {
+   const data =  await newLogin({mail:'prueba@mail.com', pass:'prueba'})
+   if (data) {
+    setError(data)
+   }
+    }catch (error) {
+      setError(`try again, ${error}`)
+    }
+  };
   return (
     <>
       <section className='landing_form'>
@@ -46,6 +55,7 @@ function Login() {
                 id='login-email'
                 placeholder='e-Mail'
                 required
+                autoComplete='username'
                 onChange={handleNameLogin}
               />
             </div>
@@ -57,6 +67,7 @@ function Login() {
                 id='login-password'
                 placeholder='Password'
                 required
+                autoComplete='current-password'
                 onChange={handlePassLogin}
               />
             </div>
@@ -64,8 +75,11 @@ function Login() {
               <button className='login__button button' onClick={handleSubmitLogin}>
                 Enter
               </button>
-              <span className='login__register'> or <Link to={'/register'}><a className='login__register--link' href="">Register</a></Link></span>
+              <span className='login__register'> or <Link className='login__register--link' to={'/register'}>Register</Link></span>
             </div>
+        <button className='login__button button' onClick={handleSubmitLoginDemo}>
+          Enter with demo user
+        </button>
           </form>
           {error && <div className='error_addTask'>{error}</div>}
         </div>

@@ -12,7 +12,7 @@ async function getTask(id) {
           const dayIs = day < 10 ? `0${day}` : day
           const monthIs = month < 10 ? `0${month}` : month;
     return {
-      id: el.task_id,
+      id: el.id,
       date: `${year}-${monthIs}-${dayIs}`,
       name: el.task_name,
       checked: el.task_checked,

@@ -14,7 +14,7 @@ console.log(todoList)
   const result = todoList.map((el)=>{
     const date = new Date(el.task_date)
     return {
-      id: el.task_id,
+      id: el.id,
       date: el.task_date === null ? '' : date.toLocaleDateString(),
       name: el.task_name,
       checked: el.task_checked,
@@ -24,5 +24,3 @@ console.log(todoList)
 }
 
 export default getAllTasks
-
-getAllTasks()
