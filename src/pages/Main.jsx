@@ -7,7 +7,7 @@ import taskChecked from '../services/Api_taskChecked';
 import deleteItem from '../services/Api_deteItem';
 
 function Main() {
-  console.log('me estoy pintando')
+
   const [tasks, setTasks] = useState([]);
 
   //   const example = [

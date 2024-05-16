@@ -9,7 +9,7 @@ const getAllTasks = async ()=> {
     }
   );
   const todoList = await response.json();
-console.log(todoList)
+
   
   const result = todoList.map((el)=>{
     const date = new Date(el.task_date)
