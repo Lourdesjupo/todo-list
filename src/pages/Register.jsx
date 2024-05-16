@@ -25,8 +25,9 @@ function Register() {
             <h1 className='register__title'>Create account</h1>
             <p className='register__text'>
               Welcome to TDlist, please enter your details below to start using
-              the app
+              the app.
             </p>
+            <span className='server_msg'>Please wait a moment while the servers start up the process can take between 1 - 2 minutes.</span>
             <div className='register__inputs'>
               <input
                 className='register__name'

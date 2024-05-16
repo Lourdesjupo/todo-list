@@ -33,7 +33,7 @@
   &__text {
     font-size: 1.4rem;
     color: $font-color-primary;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
 
   &__inputs {
@@ -105,4 +105,11 @@
 
 .label {
   font-size: 1.3rem;
+}
+
+.server_msg {
+color:#00A676;
+font-weight: bold;
+font-size: 1.3rem;
+padding-bottom: 30px;
 }

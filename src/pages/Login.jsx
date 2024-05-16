@@ -45,8 +45,9 @@ function Login() {
             <h1 className='login__title'>Log in</h1>
             <p className='login__text'>
               Welcome to TDlist, please put your login credentials below to
-              start using the app
+              start using the app.
             </p>
+            <span className='server_msg'>Please wait a moment while the servers start up the process can take between 1 - 2 minutes.</span>
             <div className='login__inputs'>
               <input
                 className='login__email'
