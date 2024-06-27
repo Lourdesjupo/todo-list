@@ -2,7 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
+const sql  = require('./db.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
@@ -26,21 +26,6 @@ server.listen(port, () => {
   console.log(`servidor arrancado: http://localhost:${port}`);
 });
 
-//conection pool
-// Create the connection pool. The pool-specific settings are the defaults
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  waitForConnections: true,
-  connectionLimit: 1,
-  maxIdle: 1, // max idle connections, the default value is the same as `connectionLimit`
-  idleTimeout: 300000, // idle connections timeout, in milliseconds, the default value 60000
-  queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 0,
-});
 
 
 
@@ -88,11 +73,7 @@ server.get('/api/allTasks', async (req, res) => {
 
   console.log(decoded, 'decoded');
   const id = decoded.id;
-  const allTasks =
-    'select * from todolist_todo where fk_user_id = ? order by task_date asc';
-  const [tasks] = await pool.query(allTasks, [id]);
-  console.log(tasks);
-
+  const tasks = await sql`SELECT * FROM todolist.todolist_todo WHERE fk_user_id =${id} ORDER BY task_date ASC`;
   res.json(tasks);
   //console.log(typeof(tasks[4].task_date), tasks[4].task_date, tasks[4].id)
 });
@@ -101,9 +82,7 @@ server.get('/api/allTasks', async (req, res) => {
 
 server.get('/api/getTask/:id', async (req, res) => {
   const id = req.params.id;
-  const queryTaskId = 'select * from todolist_todo where id = ?';
-  const [result] = await pool.query(queryTaskId, [id]);
-
+  const result = await sql`SELECT * FROM todolist.todolist_todo WHERE id =${id}`;
   res.json(result);
 });
 
@@ -122,16 +101,9 @@ server.post('/api/addNewTask', async (req, res) => {
   const id = decoded.id;
 
   console.log('holi', decoded);
-  const isertQuery =
-    'INSERT INTO todolist_todo (task_name, task_date, task_checked, fk_user_id) VALUES (?,?,?,?)';
-
-  const [result] = await pool.query(isertQuery, [
-    req.body.name,
-    req.body.date,
-    req.body.checked,
-    id,
-  ]);
-
+  const result =
+		await sql`INSERT INTO todolist.todolist_todo (task_name, task_date, task_checked, fk_user_id) VALUES (${req.body.name},${req.body.date},${req.body.checked},${id})`;
+  
   res.json(result);
   console.log('esta es la respuesta del post', result);
 });
@@ -148,14 +120,8 @@ server.put('/api/editItem', async (req, res) => {
     return;
   }
   const item = req.body;
-  const queryUpdate =
-    'UPDATE todolist_todo  SET  task_name = ?, task_date = ? WHERE id = ?';
-  const [result] = await pool.query(queryUpdate, [
-    item.name,
-    item.date,
-    item.id,
-  ]);
-
+  const result =
+		await sql`UPDATE todolist.todolist_todo  SET  task_name = ${item.name}, task_date = ${item.date} WHERE id = ${item.id}`;
   res.json(result);
 });
 
@@ -163,11 +129,7 @@ server.put('/api/editItem', async (req, res) => {
 server.put('/api/taskchecked', async (req, res) => {
   const data = req.body;
   console.log(data.check);
-  const queryUpdateCheck =
-    'UPDATE todolist_todo SET task_checked=? where id=?';
-
-  const [result] = await pool.query(queryUpdateCheck, [data.check, data.id]);
-
+  const result = await sql`UPDATE todolist.todolist_todo SET task_checked=${data.check} where id=${data.id}`;
   res.json(result);
 });
 
@@ -175,10 +137,7 @@ server.put('/api/taskchecked', async (req, res) => {
 server.delete(`/api/deleteTask/:id`, async (req, res) => {
   const id = req.params.id;
   console.log(id, 'hola id');
-  const deleteQuery = 'DELETE FROM todolist_todo where id= ?';
-
-  const [result] = await pool.query(deleteQuery, [id]);
-
+  const result = await sql`DELETE FROM todolist.todolist_todo where id= ${id}`;
   res.json(result);
 });
 
@@ -189,16 +148,9 @@ server.post('/api/register', async (req, res) => {
   const pass = req.body.pass;
   //@todo increase saltRounds when deploy in a proper hosting, for now free Render account is too slow
   const passwordHash = await bcrypt.hash(pass, 1);
-  const addRegister =
-    'INSERT INTO users_todo (user_name, user_mail, user_password) VALUES (?,?,?)';
-
-  const [result] = await pool.query(addRegister, [
-    username,
-    mail,
-    passwordHash,
-  ]);
+  const result =
+		await sql`INSERT INTO todolist.users_todo (user_name, user_mail, user_password) VALUES (${username},${mail},${passwordHash})`;
   console.log(result, 'ES EL RESULTADO');
-
   let user = {
     mail,
     passwordHash,
@@ -227,9 +179,9 @@ server.post('/api/login', async (req, res) => {
   console.log('hola');
   let startTime = process.hrtime.bigint();
   //user exist BBDD
-  let verifyUserQuery = 'SELECT *FROM users_todo WHERE user_mail = ?';
-  const [users, fields] = await pool.query(verifyUserQuery, [body.mail]);
-  const user = users[0];
+  let [users, fields] = await sql`SELECT * FROM todolist.users_todo WHERE user_mail = ${body.mail}`;
+  console.log(users)
+  const user = users;
   console.log(user, 'usuario');
   let stopTime = process.hrtime.bigint();
   console.log('solicita usuario a BBDD', stopTime - startTime);
@@ -256,7 +208,6 @@ server.post('/api/login', async (req, res) => {
      token = jwt.sign(userForToken, key, {
       expiresIn: '100000h', // El token expira en 1 hora
     });
-    console.log('manolo')
 
   } else {
    token = jwt.sign(userForToken, key, {
